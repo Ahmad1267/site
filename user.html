@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-user {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-user input {
+    padding: 8px;
+    width: 200px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.add-user button {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-user button:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+button.remove-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.remove-btn:hover {
+    background-color: #e53935;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Management</h1>
+        
+        <!-- Add User Form -->
+        <div class="add-user">
+            <input type="text" id="username" placeholder="Enter username">
+            <button onclick="addUser()">Add User</button>
+           
+        </div>
+
+        <!-- Table to Display Users -->
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- User rows will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // Simulating a list of users (for demonstration purposes)
+let users = [
+    { username: 'Arslan' },
+    { username: 'Faraz' },
+    { username: 'Hamza' },
+    { username: 'Zain' },
+    { username: 'Azan' },
+    { username: 'Ali' },
+];
+
+// Function to render the table with users
+function renderUserTable() {
+    const tableBody = document.getElementById("userTable").getElementsByTagName("tbody")[0];
+    tableBody.innerHTML = ''; // Clear the table before re-rendering
+
+    users.forEach(user => {
+        const row = document.createElement("tr");
+        const usernameCell = document.createElement("td");
+        usernameCell.textContent = user.username;
+        row.appendChild(usernameCell);
+
+        const actionCell = document.createElement("td");
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.classList.add("remove-btn");
+        removeButton.onclick = () => removeUser(user.username);
+        actionCell.appendChild(removeButton);
+        row.appendChild(actionCell);
+
+        tableBody.appendChild(row);
+    });
+}
+
+// Function to add a new user to the list (simulated)
+function addUser() {
+    const usernameInput = document.getElementById("username");
+    const newUsername = usernameInput.value.trim();
+
+    if (newUsername) {
+        // Simulate adding the user
+        users.push({ username: newUsername });
+
+        // Re-render the table with the new user
+        renderUserTable();
+
+        // Clear the input field
+        usernameInput.value = '';
+    } else {
+        alert('Please enter a username.');
+    }
+}
+
+// Function to remove a user
+function removeUser(username) {
+    // Filter out the user from the array
+    users = users.filter(user => user.username !== username);
+
+    // Re-render the table after removal
+    renderUserTable();
+}
+
+// Initial render of users when the page loads
+renderUserTable();
+
+    </script>
+</body>
+</html>
